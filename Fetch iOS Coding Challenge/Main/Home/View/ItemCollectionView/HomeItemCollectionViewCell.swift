@@ -12,7 +12,7 @@ class HomeItemCollectionViewCell: UICollectionViewCell {
     public lazy var containerView: UIView = {
         let containerView = UIView(frame: .zero)
         containerView.translatesAutoresizingMaskIntoConstraints = false
-        containerView.backgroundColor = .white
+        containerView.backgroundColor = UIColor(white: 0.75, alpha: 0.5)
         return containerView
     }()
     public lazy var itemNameLabel: UILabel = {
@@ -41,6 +41,8 @@ class HomeItemCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .white
+        layer.cornerRadius = 10
+        containerView.layer.cornerRadius = 5
         contentView.addSubview(containerView)
         contentView.addSubview(itemImage)
         containerView.addSubview(itemNameLabel)
@@ -62,7 +64,7 @@ class HomeItemCollectionViewCell: UICollectionViewCell {
         containerView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -10).isActive = true
         containerView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10).isActive = true
         containerView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10).isActive = true
-        containerView.heightAnchor.constraint(greaterThanOrEqualToConstant: 35).isActive = true
+        containerView.heightAnchor.constraint(greaterThanOrEqualToConstant: 50).isActive = true
         // Item Name
         itemNameLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 5).isActive = true
         itemNameLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 5).isActive = true
