@@ -10,14 +10,23 @@ import Combine
 
 class HomeViewController: UIViewController {
     // MARK: - References / Properties
-    /// View model managing the data and logic for the home view.
-    public let homeViewModel: HomeViewModel = HomeViewModel()
+    /// The type of view model to inject.
+    private let homeViewModel: any HomeViewModelProtocol
     /// Custom view for the home screen.
     private var homeView: HomeView!
     /// Bar button item for sorting meals.
     private var sortMealsBarButtonItem: UIBarButtonItem!
     /// Set to hold Combine cancellables to manage subscriptions.
     private var anyCancelableSet = Set<AnyCancellable>()
+    
+    init(homeViewModel: any HomeViewModelProtocol) {
+        self.homeViewModel = homeViewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func loadView() {
         super.loadView()
@@ -68,7 +77,7 @@ class HomeViewController: UIViewController {
             }
             .store(in: &anyCancelableSet)
         // Bindings for updating collection view based on desserts.
-        homeViewModel.$desserts
+        homeViewModel.dessertsPublisher
             .receive(on: DispatchQueue.main)
             .dropFirst() // Skip initial empty value
             .sink { desserts in
@@ -83,7 +92,7 @@ class HomeViewController: UIViewController {
             }
             .store(in: &anyCancelableSet)
         // Bindings for updating collection view based on searched desserts.
-        homeViewModel.$searchedDesserts
+        homeViewModel.searchedDessertsPublisher
             .receive(on: DispatchQueue.main)
             .dropFirst() // Skip initial empty value
             .sink { _ in
@@ -91,7 +100,7 @@ class HomeViewController: UIViewController {
             }
             .store(in: &anyCancelableSet)
         // Bindings for sorting option changes.
-        homeViewModel.$sortingOption
+        homeViewModel.sortingOptionPublisher
             .receive(on: DispatchQueue.main)
             .dropFirst() // Skip initial empty value
             .sink { sortingOption in
@@ -100,7 +109,7 @@ class HomeViewController: UIViewController {
             }
             .store(in: &anyCancelableSet)
         // Bindings for empty search results.
-        homeViewModel.$emptyMealSearchResults
+        homeViewModel.emptyMealSearchResultsPublisher
             .receive(on: DispatchQueue.main)
             .dropFirst() // Skip initial empty value
             .sink { noMealsFound in
@@ -112,7 +121,7 @@ class HomeViewController: UIViewController {
             }
             .store(in: &anyCancelableSet)
         // Bindings for retrieval errors.
-        homeViewModel.$retrievingMealCategoriesError
+        homeViewModel.retrievingMealCategoriesErrorPublisher
             .receive(on: DispatchQueue.main)
             .dropFirst() // Skip initial empty value
             .sink { _ in
@@ -135,7 +144,7 @@ class HomeViewController: UIViewController {
     
     /// Creates and presents the popover view controller for changing sort option.
     private func presentMealSortPopover() {
-        let popoverController = MealSortingPopoverViewController()
+        let popoverController = MealSortingPopoverViewController(viewModel: MealSortingOptionsViewModel(selectedSortingOption: homeViewModel.sortingOption))
         popoverController.mealSortingPopoverSelectionDelegate = self
         popoverController.modalPresentationStyle = .popover
         popoverController.preferredContentSize = CGSize(width: 300, height: 88)

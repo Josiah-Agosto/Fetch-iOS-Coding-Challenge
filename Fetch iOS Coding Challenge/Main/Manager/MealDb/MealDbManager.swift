@@ -9,7 +9,8 @@ import Foundation
 import os.log
 
 /// Manager class responsible for handling Meal DB API interactions.
-class MealDbManager {
+class MealDbManager: MealDbManagerProtocol {
+    // MARK: - Public Methods
     /// Retrieves meal categories from Meal DB based on the given category name.
     /// - Parameters:
     ///   - byName: The name of the category to retrieve.
