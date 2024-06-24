@@ -9,14 +9,6 @@ import UIKit
 
 class HomeView: UIView {
     // MARK: - References / Properties
-    public lazy var filterBarButtonItem: UIBarButtonItem = {
-        let item = UIBarButtonItem(image: UIImage(systemName: "slider.horizontal.3"))
-        return item
-    }()
-    public lazy var mockProfileBarButtonItem: UIBarButtonItem = {
-        let item = UIBarButtonItem(image: UIImage(systemName: "person.circle"))
-        return item
-    }()
     public lazy var navigationBarCustomView: UIView = {
         let customView = UIView(frame: CGRect(x: 0, y: 0, width: 150, height: 50))
         return customView
@@ -32,9 +24,11 @@ class HomeView: UIView {
     public lazy var navigationBarRecipeCategorySelectionButton: UIButton = {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setImage(UIImage(systemName: "chevron.down"), for: .normal)
+        let chevronImage = UIImage(systemName: "chevron.down", withConfiguration: UIImage.SymbolConfiguration(pointSize: 15, weight: .bold))!
+        button.setImage(chevronImage.withTintColor(.black, renderingMode: .alwaysOriginal), for: .normal)
         return button
     }()
+    public let mealCategoryActivityIndicator = UIActivityIndicatorView(style: .large)
     public lazy var contentView: UIView = {
         let contentView = UIView(frame: .zero)
         contentView.translatesAutoresizingMaskIntoConstraints = false
@@ -51,15 +45,25 @@ class HomeView: UIView {
         textField.layer.borderWidth = 1
         return textField
     }()
-    public lazy var itemCollectionView: UICollectionView = {
+    public lazy var mealCategoryCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
         layout.minimumInteritemSpacing = 15
         layout.minimumLineSpacing = 15
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.translatesAutoresizingMaskIntoConstraints = false
-        collectionView.register(HomeItemCollectionViewCell.self, forCellWithReuseIdentifier: "HomeItemCollectionViewCell")
+        collectionView.register(MealCategoryCollectionViewCell.self, forCellWithReuseIdentifier: "MealCategoryCollectionViewCell")
+        collectionView.showsVerticalScrollIndicator = false
         return collectionView
+    }()
+    public let mealCategoryRefreshControl = UIRefreshControl()
+    public lazy var noMealCategoryFoundLabel: UILabel = {
+        let label = UILabel(frame: .zero)
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.isHidden = true
+        label.numberOfLines = 0
+        label.textAlignment = .center
+        return label
     }()
     
     override init(frame: CGRect) {
@@ -67,7 +71,9 @@ class HomeView: UIView {
         backgroundColor = .white
         addSubview(contentView)
         contentView.addSubview(searchBar)
-        contentView.addSubview(itemCollectionView)
+        contentView.addSubview(mealCategoryCollectionView)
+        contentView.addSubview(noMealCategoryFoundLabel)
+        mealCategoryCollectionView.addSubview(mealCategoryRefreshControl)
         setupConstraints()
     }
     
@@ -87,6 +93,68 @@ class HomeView: UIView {
         navigationBarRecipeCategorySelectionButton.leadingAnchor.constraint(equalTo: navigationBarTitleLabel.trailingAnchor, constant: 5).isActive = true
         navigationBarRecipeCategorySelectionButton.trailingAnchor.constraint(equalTo: navigationBarCustomView.trailingAnchor).isActive = true
         navigationBarRecipeCategorySelectionButton.centerYAnchor.constraint(equalTo: navigationBarCustomView.centerYAnchor).isActive = true
+        navigationBarRecipeCategorySelectionButton.widthAnchor.constraint(equalToConstant: 20).isActive = true
+        navigationBarRecipeCategorySelectionButton.heightAnchor.constraint(equalToConstant: 10).isActive = true
+    }
+    
+    
+    public func setupActivityIndicator() {
+        DispatchQueue.main.async {
+            self.contentView.addSubview(self.mealCategoryActivityIndicator)
+            self.mealCategoryActivityIndicator.center = self.center
+            self.mealCategoryActivityIndicator.startAnimating()
+        }
+    }
+    
+    
+    public func stopActivityIndicatorAnimating() {
+        DispatchQueue.main.async {
+            self.mealCategoryActivityIndicator.isHidden = true
+            self.mealCategoryActivityIndicator.stopAnimating()
+            self.mealCategoryActivityIndicator.removeFromSuperview()
+        }
+    }
+    
+    
+    public func stopRefreshControlAnimating() {
+        DispatchQueue.main.async {
+            self.mealCategoryRefreshControl.endRefreshing()
+        }
+    }
+    
+    
+    public func removeMessage() {
+        DispatchQueue.main.async {
+            self.mealCategoryCollectionView.isHidden = false
+            self.noMealCategoryFoundLabel.isHidden = true
+        }
+    }
+    
+    
+    public func displayMessage(_ text: String) {
+        DispatchQueue.main.async {
+            self.mealCategoryCollectionView.isHidden = true
+            self.noMealCategoryFoundLabel.text = text
+            self.noMealCategoryFoundLabel.isHidden = false
+        }
+    }
+    
+    
+    public func displayErrorMessage(_ text: String, hidden: Bool) {
+        DispatchQueue.main.async {
+            self.mealCategoryCollectionView.isHidden = !hidden
+            self.noMealCategoryFoundLabel.text = text
+            self.noMealCategoryFoundLabel.isHidden = hidden
+        }
+    }
+    
+    
+    public func reloadCells() {
+        DispatchQueue.main.async {
+            self.mealCategoryCollectionView.isHidden = true
+            self.mealCategoryCollectionView.isHidden = false
+            self.mealCategoryCollectionView.reloadData()
+        }
     }
     
     
@@ -102,11 +170,16 @@ class HomeView: UIView {
         searchBar.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15).isActive = true
         searchBar.heightAnchor.constraint(equalToConstant: 40).isActive = true
         // Item Collection View
-        itemCollectionView.topAnchor.constraint(equalTo: searchBar.bottomAnchor, constant: 10).isActive = true
-        itemCollectionView.widthAnchor.constraint(equalTo: contentView.widthAnchor, constant: -30).isActive = true
-        itemCollectionView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15).isActive = true
-        itemCollectionView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15).isActive = true
-        itemCollectionView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 10).isActive = true
+        mealCategoryCollectionView.topAnchor.constraint(equalTo: searchBar.bottomAnchor, constant: 10).isActive = true
+        mealCategoryCollectionView.widthAnchor.constraint(equalTo: contentView.widthAnchor, constant: -30).isActive = true
+        mealCategoryCollectionView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15).isActive = true
+        mealCategoryCollectionView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15).isActive = true
+        mealCategoryCollectionView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 10).isActive = true
+        // No Meal Category Found Label
+        noMealCategoryFoundLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
+        noMealCategoryFoundLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
+        noMealCategoryFoundLabel.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.85).isActive = true
+        noMealCategoryFoundLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: 40).isActive = true
     }
     
 }
