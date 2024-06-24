@@ -15,8 +15,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Setup initial Navigation Controller
         guard let windowScene = (scene as? UIWindowScene) else { return }
         window = UIWindow(windowScene: windowScene)
-        let viewController = ViewController()
-        window?.rootViewController = UINavigationController(rootViewController: viewController)
+        let mealDbManager = MealDbManager()
+        let homeViewController = HomeViewController(homeViewModel: HomeViewModel(mealDbManager: mealDbManager))
+        window?.rootViewController = UINavigationController(rootViewController: homeViewController)
         window?.makeKeyAndVisible()
     }
 
