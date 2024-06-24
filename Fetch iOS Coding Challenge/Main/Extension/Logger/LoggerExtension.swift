@@ -8,9 +8,12 @@
 import Foundation
 import os.log
 
+/// Extension to Logger to define a main logger for the app.
 extension Logger {
-    // MARK: - References / Properties
+    
+    /// Bundle identifier to use as subsystem for logging.
     private static let appIdentifier = Bundle.main.bundleIdentifier ?? "com.fetch-ios-challenge"
+    /// Singleton instance of the main logger.
     static let main = Logger(subsystem: appIdentifier, category: "main")
     
 }

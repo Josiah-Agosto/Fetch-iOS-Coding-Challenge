@@ -7,6 +7,8 @@
 
 import Foundation
 
+/// Represents the actual format the JSON comes in from MealDB.
 struct MealContainer: Decodable {
+    /// Contains all meals.
     let meals: [Meal]
 }

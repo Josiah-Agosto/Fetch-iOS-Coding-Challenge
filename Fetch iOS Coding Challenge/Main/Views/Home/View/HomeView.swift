@@ -9,10 +9,12 @@ import UIKit
 
 class HomeView: UIView {
     // MARK: - References / Properties
+    /// Custom view for navigation bar, it is used at the top middle of the navigation bar showing the category and mock button.
     public lazy var navigationBarCustomView: UIView = {
         let customView = UIView(frame: CGRect(x: 0, y: 0, width: 150, height: 50))
         return customView
     }()
+    /// Displays the meal category in the navigation bar custom view.
     public lazy var navigationBarTitleLabel: UILabel = {
         let label = UILabel(frame: .zero)
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -21,6 +23,7 @@ class HomeView: UIView {
         label.font = UIFont.systemFont(ofSize: 18, weight: .bold)
         return label
     }()
+    /// Mock button for selecting recipe category in navigation bar.
     public lazy var navigationBarRecipeCategorySelectionButton: UIButton = {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -28,12 +31,15 @@ class HomeView: UIView {
         button.setImage(chevronImage.withTintColor(.black, renderingMode: .alwaysOriginal), for: .normal)
         return button
     }()
+    /// Activity indicator shown during data loading.
     public let mealCategoryActivityIndicator = UIActivityIndicatorView(style: .large)
+    /// Container view for all content.
     public lazy var contentView: UIView = {
         let contentView = UIView(frame: .zero)
         contentView.translatesAutoresizingMaskIntoConstraints = false
         return contentView
     }()
+    /// Search bar for filtering desserts.
     public lazy var searchBar: UITextField = {
         let textField = UITextField(frame: .zero)
         textField.translatesAutoresizingMaskIntoConstraints = false
@@ -45,6 +51,7 @@ class HomeView: UIView {
         textField.layer.borderWidth = 1
         return textField
     }()
+    /// Collection view displaying dessert categories.
     public lazy var mealCategoryCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -56,7 +63,9 @@ class HomeView: UIView {
         collectionView.showsVerticalScrollIndicator = false
         return collectionView
     }()
+    /// Refresh control for updating meal categories.
     public let mealCategoryRefreshControl = UIRefreshControl()
+    /// Label displayed when no meal categories are found.
     public lazy var noMealCategoryFoundLabel: UILabel = {
         let label = UILabel(frame: .zero)
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -66,6 +75,7 @@ class HomeView: UIView {
         return label
     }()
     
+    // MARK: - Initialization
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = .white
@@ -81,6 +91,34 @@ class HomeView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // MARK: - Private Methods
+    /// Sets up auto layout constraints for subviews.
+    private func setupConstraints() {
+        // Content View
+        contentView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor).isActive = true
+        contentView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
+        contentView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
+        contentView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
+        // Search Bar
+        searchBar.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10).isActive = true
+        searchBar.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15).isActive = true
+        searchBar.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15).isActive = true
+        searchBar.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        // Meal Collection View
+        mealCategoryCollectionView.topAnchor.constraint(equalTo: searchBar.bottomAnchor, constant: 10).isActive = true
+        mealCategoryCollectionView.widthAnchor.constraint(equalTo: contentView.widthAnchor, constant: -30).isActive = true
+        mealCategoryCollectionView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15).isActive = true
+        mealCategoryCollectionView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15).isActive = true
+        mealCategoryCollectionView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 10).isActive = true
+        // No Meal Category Found Label
+        noMealCategoryFoundLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
+        noMealCategoryFoundLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
+        noMealCategoryFoundLabel.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.85).isActive = true
+        noMealCategoryFoundLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: 40).isActive = true
+    }
+    
+    // MARK: - Public Methods
+    /// Configures the navigation bar custom view with title label and selection button.
     public func configureNavigationBarCustomView() {
         navigationBarCustomView.addSubview(navigationBarTitleLabel)
         navigationBarCustomView.addSubview(navigationBarRecipeCategorySelectionButton)
@@ -97,7 +135,7 @@ class HomeView: UIView {
         navigationBarRecipeCategorySelectionButton.heightAnchor.constraint(equalToConstant: 10).isActive = true
     }
     
-    
+    /// Sets up and displays activity indicator.
     public func setupActivityIndicator() {
         DispatchQueue.main.async {
             self.contentView.addSubview(self.mealCategoryActivityIndicator)
@@ -106,7 +144,7 @@ class HomeView: UIView {
         }
     }
     
-    
+    /// Stops and hides activity indicator.
     public func stopActivityIndicatorAnimating() {
         DispatchQueue.main.async {
             self.mealCategoryActivityIndicator.isHidden = true
@@ -115,14 +153,14 @@ class HomeView: UIView {
         }
     }
     
-    
+    /// Stops refresh control animation.
     public func stopRefreshControlAnimating() {
         DispatchQueue.main.async {
             self.mealCategoryRefreshControl.endRefreshing()
         }
     }
     
-    
+    /// Removes no meal category found message.
     public func removeMessage() {
         DispatchQueue.main.async {
             self.mealCategoryCollectionView.isHidden = false
@@ -130,7 +168,8 @@ class HomeView: UIView {
         }
     }
     
-    
+    /// Displays message when no meal category is found.
+    /// - Parameter text: The text message to display.
     public func displayMessage(_ text: String) {
         DispatchQueue.main.async {
             self.mealCategoryCollectionView.isHidden = true
@@ -139,7 +178,10 @@ class HomeView: UIView {
         }
     }
     
-    
+    /// Displays error message.
+    /// - Parameters:
+    ///   - text: Error message to display.
+    ///   - hidden: Boolean flag to hide or show message.
     public func displayErrorMessage(_ text: String, hidden: Bool) {
         DispatchQueue.main.async {
             self.mealCategoryCollectionView.isHidden = !hidden
@@ -148,38 +190,13 @@ class HomeView: UIView {
         }
     }
     
-    
+    /// Reloads collection view cells.
     public func reloadCells() {
         DispatchQueue.main.async {
             self.mealCategoryCollectionView.isHidden = true
             self.mealCategoryCollectionView.isHidden = false
             self.mealCategoryCollectionView.reloadData()
         }
-    }
-    
-    
-    private func setupConstraints() {
-        // Content View
-        contentView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor).isActive = true
-        contentView.leadingAnchor.constraint(equalTo: leadingAnchor).isActive = true
-        contentView.trailingAnchor.constraint(equalTo: trailingAnchor).isActive = true
-        contentView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
-        // Search Bar
-        searchBar.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10).isActive = true
-        searchBar.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15).isActive = true
-        searchBar.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15).isActive = true
-        searchBar.heightAnchor.constraint(equalToConstant: 40).isActive = true
-        // Item Collection View
-        mealCategoryCollectionView.topAnchor.constraint(equalTo: searchBar.bottomAnchor, constant: 10).isActive = true
-        mealCategoryCollectionView.widthAnchor.constraint(equalTo: contentView.widthAnchor, constant: -30).isActive = true
-        mealCategoryCollectionView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15).isActive = true
-        mealCategoryCollectionView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -15).isActive = true
-        mealCategoryCollectionView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 10).isActive = true
-        // No Meal Category Found Label
-        noMealCategoryFoundLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
-        noMealCategoryFoundLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
-        noMealCategoryFoundLabel.widthAnchor.constraint(equalTo: contentView.widthAnchor, multiplier: 0.85).isActive = true
-        noMealCategoryFoundLabel.heightAnchor.constraint(greaterThanOrEqualToConstant: 40).isActive = true
     }
     
 }

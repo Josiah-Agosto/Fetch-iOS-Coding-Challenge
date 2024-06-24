@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// Used in `MealSortingPopoverViewController` to send the selected option.
 protocol MealSortingPopoverSelectionProtocol: AnyObject {
     func sortingOptionSelected(_ option: MealSortingOption)
 }
