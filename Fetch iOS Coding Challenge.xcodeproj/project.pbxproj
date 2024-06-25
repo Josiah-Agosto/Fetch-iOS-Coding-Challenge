@@ -40,6 +40,7 @@
 		BD8A51D82C2A5AB8007EF956 /* MealDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD8A51D72C2A5AB8007EF956 /* MealDetailView.swift */; };
 		BD8A51DA2C2A5AC7007EF956 /* MealDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD8A51D92C2A5AC7007EF956 /* MealDetailViewModel.swift */; };
 		BD8A51DD2C2A67B6007EF956 /* MealDetailViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD8A51DC2C2A67B6007EF956 /* MealDetailViewModelProtocol.swift */; };
+		BD9F9CD42C2AB8FD00F235DA /* MealDetailViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD9F9CD32C2AB8FD00F235DA /* MealDetailViewModelTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -89,6 +90,7 @@
 		BD8A51D72C2A5AB8007EF956 /* MealDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealDetailView.swift; sourceTree = "<group>"; };
 		BD8A51D92C2A5AC7007EF956 /* MealDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealDetailViewModel.swift; sourceTree = "<group>"; };
 		BD8A51DC2C2A67B6007EF956 /* MealDetailViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealDetailViewModelProtocol.swift; sourceTree = "<group>"; };
+		BD9F9CD32C2AB8FD00F235DA /* MealDetailViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealDetailViewModelTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -459,6 +461,7 @@
 		BD9F9CD22C2AB89200F235DA /* Detail */ = {
 			isa = PBXGroup;
 			children = (
+				BD9F9CD32C2AB8FD00F235DA /* MealDetailViewModelTests.swift */,
 			);
 			path = Detail;
 			sourceTree = "<group>";
@@ -597,6 +600,7 @@
 			files = (
 				BD83A5A32C2A210F0009A31B /* HomeViewModelTests.swift in Sources */,
 				BD83A58F2C29F6490009A31B /* MealDbManagerTests.swift in Sources */,
+				BD9F9CD42C2AB8FD00F235DA /* MealDetailViewModelTests.swift in Sources */,
 				BD83A5A52C2A2E000009A31B /* PopoverViewModelTests.swift in Sources */,
 				BD83A5912C2A04530009A31B /* MockImageCache.swift in Sources */,
 				BD83A5942C2A05BC0009A31B /* ImageCacheTests.swift in Sources */,
