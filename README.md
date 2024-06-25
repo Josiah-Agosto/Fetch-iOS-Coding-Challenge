@@ -30,3 +30,6 @@ The application is built using the **Model-View-ViewModel (MVVM)** architecture,
 - **View Models**: Handles the business logic and data manipulation for the views.
 - **Networking Layer**: Responsible for making API calls to retrieve dessert data.
 - **Unit Tests**: Comprehensive tests for view models and networking components to ensure proper functionality.
+
+## How To Review
+The most up to date project is in the "main" branch.
