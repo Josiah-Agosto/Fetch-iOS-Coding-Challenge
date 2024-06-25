@@ -14,7 +14,7 @@ class MealDetailViewModel: ObservableObject {
     /// Published property holding the meal details.
     @Published var meal: Meal
     /// Published property holding the thumbnail image of the meal.
-    @Published var thumbnailImage: UIImage = UIImage(systemName: "exclamationmark.triangle.fill")!
+    @Published var thumbnailImage: UIImage = UIImage()
     /// The MealDbManager to use.
     private let mealDbManager: MealDbManagerProtocol
     

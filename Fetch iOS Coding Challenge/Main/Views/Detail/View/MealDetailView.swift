@@ -15,38 +15,47 @@ struct MealDetailView: View {
     var body: some View {
         GeometryReader { reader in
             ScrollView(.vertical) {
-                VStack {
+                VStack(spacing: 0) {
                     // Display meal thumbnail image if available
                     Image(uiImage: mealDetailViewModel.thumbnailImage)
                         .resizable()
                         .aspectRatio(contentMode: .fill)
+                        .ignoresSafeArea(.all)
                         .frame(height: UIScreen.main.bounds.height / 3)
                         .clipped()
+                        .background(Color.green)
                     // Meal Details VStack
                     VStack(alignment: .leading, spacing: 20) {
                         // Display meal name and area
                         MealBasicInfoView()
+                            .padding(.horizontal)
+                            .padding(.top, 10)
                         // Display meal instructions if available
                         if let instructions = mealDetailViewModel.meal.instructions {
                             MealInstructionsView(instructions: instructions)
+                                .padding(.horizontal)
                         }
                         // Display meal ingredients if available
                         if let ingredientsMeasure = mealDetailViewModel.meal.ingredientsMeasure, !ingredientsMeasure.isEmpty {
                             MealIngredientsView(ingredientsMeasure: ingredientsMeasure)
+                                .padding(.horizontal)
                         }
                         // Display YouTube link if available
                         if let youtubeLink = mealDetailViewModel.meal.youtubeLink, let url = URL(string: youtubeLink) {
                             YoutubeLinkView(url: url)
+                                .padding(.horizontal)
                         }
                     }
-                    .padding(.horizontal)
+                    .background(Color.white)
+                    .clipShape(RoundedRectangle(cornerRadius: 30))
+                    .offset(y: -30)
                     // Spacer to add extra space for scrolling
                     Spacer(minLength: 50)
                 }
-                .background(Color.white)
             }
         }
         .navigationBarBackButtonHidden(true)
+        .ignoresSafeArea(.all)
         .background(Color.white.edgesIgnoringSafeArea(.all))
     }
     

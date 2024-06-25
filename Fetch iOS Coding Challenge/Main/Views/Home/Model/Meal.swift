@@ -131,7 +131,6 @@ struct Meal: Decodable {
         var result = [String: String]()
         // Retrieves only the ingredients properties by filtering based on a prefix.
         let keys = container.allKeys.filter { $0.stringValue.hasPrefix("strIngredient") }
-        print("All keys: \(container.allKeys)")
         for key in keys {
             // Gets the number from the ingredient represented, ex: "1" from strIngredient1.
             let ingredientNumber = key.stringValue.replacingOccurrences(of: "strIngredient", with: "")
