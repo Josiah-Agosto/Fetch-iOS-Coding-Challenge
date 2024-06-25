@@ -8,11 +8,7 @@
 import UIKit
 
 /// Singleton class responsible for caching images fetched from URLs.
-<<<<<<< HEAD
-class ImageCache {
-=======
-class ImageCache: ImageCacheProtocol {
->>>>>>> 2b70d0b826369b5c56aa7824c502a6f31d3513d5
+final class ImageCache: ImageCacheProtocol {
     // MARK: - References / Properties
     /// Shared singleton instance of ImageCache.
     static let shared = ImageCache()

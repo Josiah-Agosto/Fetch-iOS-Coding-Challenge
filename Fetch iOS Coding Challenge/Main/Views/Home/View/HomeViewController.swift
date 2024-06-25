@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SwiftUI
 import Combine
 
 class HomeViewController: UIViewController {
@@ -170,6 +171,11 @@ class HomeViewController: UIViewController {
         presentMealSortPopover()
     }
     
+    /// An action to come back from the SwiftUI `MealDetailView`.
+    @objc private func mealDetailBackButtonItemAction() {
+        navigationController?.popViewController(animated: true)
+    }
+    
     /// Creates and presents the popover view controller for changing sort option.
     private func presentMealSortPopover() {
 <<<<<<< HEAD
@@ -189,6 +195,20 @@ class HomeViewController: UIViewController {
         DispatchQueue.main.async {
             self.present(popoverController, animated: true, completion: nil)
         }
+    }
+    
+    
+    private func createCustomBackButton() -> UIBarButtonItem {
+        let button = UIButton(type: .custom)
+        button.setImage(UIImage(systemName: "chevron.backward"), for: .normal)
+        button.tintColor = UIColor.white
+        button.backgroundColor = UIColor.black.withAlphaComponent(0.5) // Background color with transparency
+        button.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
+        button.layer.cornerRadius = 20
+        button.clipsToBounds = true
+        button.addTarget(self, action: #selector(mealDetailBackButtonItemAction), for: .touchUpInside)
+        let barButtonItem = UIBarButtonItem(customView: button)
+        return barButtonItem
     }
     
 }
@@ -219,6 +239,15 @@ extension HomeViewController: UICollectionViewDataSource {
         let dessert = homeViewModel.searchedDesserts.isEmpty ? homeViewModel.desserts[indexPath.item] : homeViewModel.searchedDesserts[indexPath.item]
         cell.configureCellWithMeal(dessert)
         return cell
+    }
+    
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let mealDetailViewModel = MealDetailViewModel(meal: homeViewModel.searchedDesserts.isEmpty ? homeViewModel.desserts[indexPath.item] : homeViewModel.searchedDesserts[indexPath.item], mealDbManager: MealDbManager())
+        let mealDetailView = MealDetailView(mealDetailViewModel: mealDetailViewModel)
+        let hostingController = UIHostingController(rootView: mealDetailView)
+        hostingController.navigationItem.leftBarButtonItem = createCustomBackButton()
+        navigationController?.pushViewController(hostingController, animated: true)
     }
     
 }

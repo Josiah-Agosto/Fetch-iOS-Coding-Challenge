@@ -19,8 +19,8 @@ struct Constants {
     /// Creates a Meal DB lookup URL with the given meal ID.
     /// - Parameter mealId: The ID of the meal to create the lookup URL with.
     /// - Returns: The constructed URL as a string.
-    static func createMealDbLookupUrlWithId(mealId: Int) -> String {
-        return "https://themealdb.com/api/json/v1/1/lookup.php?i=" + String(mealId)
+    static func createMealDbLookupUrlWithId(mealId: String) -> String {
+        return "https://themealdb.com/api/json/v1/1/lookup.php?i=" + mealId
     }
     
 }
