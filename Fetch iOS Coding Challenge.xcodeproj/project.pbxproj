@@ -39,6 +39,7 @@
 		BD83A5A52C2A2E000009A31B /* PopoverViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD83A5A42C2A2E000009A31B /* PopoverViewModelTests.swift */; };
 		BD8A51D82C2A5AB8007EF956 /* MealDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD8A51D72C2A5AB8007EF956 /* MealDetailView.swift */; };
 		BD8A51DA2C2A5AC7007EF956 /* MealDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD8A51D92C2A5AC7007EF956 /* MealDetailViewModel.swift */; };
+		BD8A51DD2C2A67B6007EF956 /* MealDetailViewModelProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD8A51DC2C2A67B6007EF956 /* MealDetailViewModelProtocol.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -87,6 +88,7 @@
 		BD83A5A42C2A2E000009A31B /* PopoverViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopoverViewModelTests.swift; sourceTree = "<group>"; };
 		BD8A51D72C2A5AB8007EF956 /* MealDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealDetailView.swift; sourceTree = "<group>"; };
 		BD8A51D92C2A5AC7007EF956 /* MealDetailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealDetailViewModel.swift; sourceTree = "<group>"; };
+		BD8A51DC2C2A67B6007EF956 /* MealDetailViewModelProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealDetailViewModelProtocol.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -422,7 +424,7 @@
 		BD8A51D32C2A5A8B007EF956 /* Detail */ = {
 			isa = PBXGroup;
 			children = (
-				BD8A51D62C2A5A9C007EF956 /* Model */,
+				BD8A51DB2C2A67A7007EF956 /* Protocols */,
 				BD8A51D52C2A5A99007EF956 /* View */,
 				BD8A51D42C2A5A94007EF956 /* ViewModel */,
 			);
@@ -445,11 +447,12 @@
 			path = View;
 			sourceTree = "<group>";
 		};
-		BD8A51D62C2A5A9C007EF956 /* Model */ = {
+		BD8A51DB2C2A67A7007EF956 /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
+				BD8A51DC2C2A67B6007EF956 /* MealDetailViewModelProtocol.swift */,
 			);
-			path = Model;
+			path = Protocols;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -558,6 +561,7 @@
 				BD83A5972C2A09880009A31B /* HomeViewModelProtocol.swift in Sources */,
 				BD83A54E2C29477B0009A31B /* LoggerExtension.swift in Sources */,
 				BD83A5852C29E6D90009A31B /* ImageCacheProtocol.swift in Sources */,
+				BD8A51DD2C2A67B6007EF956 /* MealDetailViewModelProtocol.swift in Sources */,
 				BD83A5602C297A090009A31B /* MealSortingPopoverSelectionProtocol.swift in Sources */,
 				BD83A5992C2A16120009A31B /* MealSortingOptionsViewModelProtocol.swift in Sources */,
 				BD8A51D82C2A5AB8007EF956 /* MealDetailView.swift in Sources */,
