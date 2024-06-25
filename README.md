@@ -1,7 +1,7 @@
 # iOS Coding Challenge - Dessert Recipes
 
 ## Overview
-This project is an iOS application that allows users to retrieve a list of dessert recipes, sort them alphabetically, and view detailed information about each meal, including its ingredients and instructions. The application is built using a mix of UIKit and SwiftUI to demonstrate proficiency in both frameworks and follows the Model-View-ViewModel (MVVM) architecture for a clean and maintainable codebase.
+This project is an iOS application that allows users to retrieve a list of dessert recipes, sort them alphabetically, and view detailed information about each meal, including its ingredients and instructions. The application is built using a mix of UIKit and SwiftUI to demonstrate proficiency in both frameworks and follows the Model-View-ViewModel (MVVM) architecture for a clean and maintainable codebase. The project does not have a team set (its set to none), this is to reduce any potential errors since its not going to be published on the App Store/Testflight, lastly since i was able to test through simulator. Enjoy reviewing!
 
 ## Features
 - **Retrieve Dessert Recipes**: Fetch a list of dessert recipes from an external API.
