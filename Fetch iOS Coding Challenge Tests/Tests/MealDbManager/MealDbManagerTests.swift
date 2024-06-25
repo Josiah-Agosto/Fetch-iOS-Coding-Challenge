@@ -10,6 +10,7 @@ import Foundation
 
 class MealDbManagerTests: XCTestCase {
     // MARK: - References / Properties
+    /// System Under Test (SUT): The instance of `MockMealDbManager` being tested.
     private var sut: MockMealDbManager!
     
     override func setUp() {
@@ -17,13 +18,12 @@ class MealDbManagerTests: XCTestCase {
         sut = MockMealDbManager()
     }
     
-    
     override func tearDown() {
-        super.tearDown()
         sut = nil
+        super.tearDown()
     }
     
-    
+    /// Tests that meal categories are retrieved successfully.
     func testSuccessfulCategoryRetrieval() {
         let incomingData = """
         {
@@ -47,7 +47,7 @@ class MealDbManagerTests: XCTestCase {
         }
     }
     
-    
+    /// Tests that meal category retrieval fails with an error.
     func testFailedCategoryRetrieval() {
         let incomingData = """
         {

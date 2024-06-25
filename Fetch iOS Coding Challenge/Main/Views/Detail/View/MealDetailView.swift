@@ -23,7 +23,6 @@ struct MealDetailView: View {
                         .ignoresSafeArea(.all)
                         .frame(height: UIScreen.main.bounds.height / 3)
                         .clipped()
-                        .background(Color.green)
                     // Meal Details VStack
                     VStack(alignment: .leading, spacing: 20) {
                         // Display meal name and area

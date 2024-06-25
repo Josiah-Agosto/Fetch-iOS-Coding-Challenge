@@ -11,7 +11,9 @@ import Foundation
 
 class HomeViewModelTests: XCTestCase {
     // MARK: - References / Properties
+    /// System Under Test (SUT): The instance of `HomeViewModel` being tested.
     var sut: HomeViewModel!
+    /// Mock instance of `MealDbManager` used to simulate data retrieval.
     var sutHelper: MockMealDbManager = MockMealDbManager()
     
     override func setUp() {
@@ -21,44 +23,44 @@ class HomeViewModelTests: XCTestCase {
     
     
     override func tearDown() {
-        super.tearDown()
         sut = nil
+        super.tearDown()
     }
     
-    
+    /// Tests that the desserts list is initialized as empty.
     func testDessertsInitialization() {
         XCTAssertTrue(sut.desserts.isEmpty)
     }
     
-    
+    /// Tests that the searched desserts list is initialized as empty.
     func testSearchedDessertsInitialization() {
         XCTAssertTrue(sut.searchedDesserts.isEmpty)
     }
     
-    
+    /// Tests that the meal categories error is nil upon initialization.
     func testRetrieveMealCategoriesNilUponInitialization() {
         XCTAssertNil(sut.retrievingMealCategoriesError)
     }
     
-    
+    /// Tests that the empty meal search results flag is false upon initialization.
     func testEmptyMealSearchResultsInitialization() {
         XCTAssertFalse(sut.emptyMealSearchResults)
     }
     
-    
+    /// Tests that the sorting option is properly initialized.
     func testSortingOptionInitialization() {
         let sampleSortOptionResult: MealSortingOption = .alphabeticallyAscending
         XCTAssertEqual(sut.sortingOption, sampleSortOptionResult)
     }
     
-    
+    /// Tests filtering desserts with an empty search text.
     func testFilteringEmptyDessertText() {
         sut.filterDesserts(by: "")
         XCTAssertFalse(sut.emptyMealSearchResults)
         XCTAssertTrue(sut.searchedDesserts.isEmpty)
     }
     
-    
+    /// Tests filtering desserts by a search text that does not match any desserts.
     func testFilterDessertsBySearchText() {
         sut.desserts = [
             Meal(mealId: "123", name: "Apple Pie", thumbnail: "https://test.com"),
@@ -76,7 +78,7 @@ class HomeViewModelTests: XCTestCase {
         wait(for: [expectation], timeout: 1.0)
     }
     
-    
+    /// Tests retrieving dessert meals successfully.
     func testRetrieveDessertMeals_Success() {
         sutHelper.sampleData = """
         {
@@ -102,7 +104,7 @@ class HomeViewModelTests: XCTestCase {
         wait(for: [expectation], timeout: 1.0)
     }
     
-    
+    /// Tests sorting meals alphabetically in ascending order.
     func testSortMealsAlphabetically_Ascending() {
         let meals = [
             Meal(mealId: "2", name: "Cheesecake", thumbnail: nil),
@@ -113,7 +115,7 @@ class HomeViewModelTests: XCTestCase {
         XCTAssertEqual(sortedMeals.last?.name, "Chocolate Cake")
     }
     
-    
+    /// Tests filtering out meals with nil values.
     func testFilterNilValues() {
         let meals = [
             Meal(mealId: "1", name: "Chocolate Cake"),

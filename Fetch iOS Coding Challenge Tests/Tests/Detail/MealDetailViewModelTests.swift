@@ -8,7 +8,6 @@
 @testable import Fetch_iOS_Coding_Challenge
 import XCTest
 
-/// Unit tests for MealDetailViewModel.
 class MealDetailViewModelTests: XCTestCase {
     // MARK: - References / Properties
     /// System Under Test (SUT): The instance of MealDetailViewModel being tested.

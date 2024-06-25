@@ -100,8 +100,6 @@ struct Meal: Decodable {
         ingredientsMeasure = try decodeIngredientsMeasure(container: container)
     }
     
-<<<<<<< HEAD
-=======
     /// Initializes a meal with specified properties.
     /// - Parameters:
     ///   - mealId: The unique identifier for the meal.
@@ -125,7 +123,6 @@ struct Meal: Decodable {
         self.ingredientsMeasure = ingredientsMeasure
     }
     
->>>>>>> 2b70d0b826369b5c56aa7824c502a6f31d3513d5
     // MARK: - Private Methods
     /// Decodes ingredients and their respective measures from the decoder container.
     /// - Parameter container: The keyed decoding container.
