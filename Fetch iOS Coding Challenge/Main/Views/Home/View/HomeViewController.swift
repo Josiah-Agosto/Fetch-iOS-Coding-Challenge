@@ -170,7 +170,7 @@ class HomeViewController: UIViewController {
         let button = UIButton(type: .custom)
         button.setImage(UIImage(systemName: "chevron.backward"), for: .normal)
         button.tintColor = UIColor.white
-        button.backgroundColor = UIColor.black.withAlphaComponent(0.5) // Background color with transparency
+        button.backgroundColor = UIColor.black.withAlphaComponent(0.5)
         button.frame = CGRect(x: 0, y: 0, width: 40, height: 40)
         button.layer.cornerRadius = 20
         button.clipsToBounds = true
