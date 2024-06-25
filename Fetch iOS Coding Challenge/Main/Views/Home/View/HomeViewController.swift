@@ -10,8 +10,13 @@ import Combine
 
 class HomeViewController: UIViewController {
     // MARK: - References / Properties
+<<<<<<< HEAD
     /// View model managing the data and logic for the home view.
     public let homeViewModel: HomeViewModel = HomeViewModel()
+=======
+    /// The type of view model to inject.
+    private let homeViewModel: any HomeViewModelProtocol
+>>>>>>> 2b70d0b826369b5c56aa7824c502a6f31d3513d5
     /// Custom view for the home screen.
     private var homeView: HomeView!
     /// Bar button item for sorting meals.
@@ -19,6 +24,18 @@ class HomeViewController: UIViewController {
     /// Set to hold Combine cancellables to manage subscriptions.
     private var anyCancelableSet = Set<AnyCancellable>()
     
+<<<<<<< HEAD
+=======
+    init(homeViewModel: any HomeViewModelProtocol) {
+        self.homeViewModel = homeViewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+>>>>>>> 2b70d0b826369b5c56aa7824c502a6f31d3513d5
     override func loadView() {
         super.loadView()
         homeView = HomeView()
@@ -68,7 +85,11 @@ class HomeViewController: UIViewController {
             }
             .store(in: &anyCancelableSet)
         // Bindings for updating collection view based on desserts.
+<<<<<<< HEAD
         homeViewModel.$desserts
+=======
+        homeViewModel.dessertsPublisher
+>>>>>>> 2b70d0b826369b5c56aa7824c502a6f31d3513d5
             .receive(on: DispatchQueue.main)
             .dropFirst() // Skip initial empty value
             .sink { desserts in
@@ -83,7 +104,11 @@ class HomeViewController: UIViewController {
             }
             .store(in: &anyCancelableSet)
         // Bindings for updating collection view based on searched desserts.
+<<<<<<< HEAD
         homeViewModel.$searchedDesserts
+=======
+        homeViewModel.searchedDessertsPublisher
+>>>>>>> 2b70d0b826369b5c56aa7824c502a6f31d3513d5
             .receive(on: DispatchQueue.main)
             .dropFirst() // Skip initial empty value
             .sink { _ in
@@ -91,7 +116,11 @@ class HomeViewController: UIViewController {
             }
             .store(in: &anyCancelableSet)
         // Bindings for sorting option changes.
+<<<<<<< HEAD
         homeViewModel.$sortingOption
+=======
+        homeViewModel.sortingOptionPublisher
+>>>>>>> 2b70d0b826369b5c56aa7824c502a6f31d3513d5
             .receive(on: DispatchQueue.main)
             .dropFirst() // Skip initial empty value
             .sink { sortingOption in
@@ -100,7 +129,11 @@ class HomeViewController: UIViewController {
             }
             .store(in: &anyCancelableSet)
         // Bindings for empty search results.
+<<<<<<< HEAD
         homeViewModel.$emptyMealSearchResults
+=======
+        homeViewModel.emptyMealSearchResultsPublisher
+>>>>>>> 2b70d0b826369b5c56aa7824c502a6f31d3513d5
             .receive(on: DispatchQueue.main)
             .dropFirst() // Skip initial empty value
             .sink { noMealsFound in
@@ -112,7 +145,11 @@ class HomeViewController: UIViewController {
             }
             .store(in: &anyCancelableSet)
         // Bindings for retrieval errors.
+<<<<<<< HEAD
         homeViewModel.$retrievingMealCategoriesError
+=======
+        homeViewModel.retrievingMealCategoriesErrorPublisher
+>>>>>>> 2b70d0b826369b5c56aa7824c502a6f31d3513d5
             .receive(on: DispatchQueue.main)
             .dropFirst() // Skip initial empty value
             .sink { _ in
@@ -135,7 +172,11 @@ class HomeViewController: UIViewController {
     
     /// Creates and presents the popover view controller for changing sort option.
     private func presentMealSortPopover() {
+<<<<<<< HEAD
         let popoverController = MealSortingPopoverViewController()
+=======
+        let popoverController = MealSortingPopoverViewController(viewModel: MealSortingOptionsViewModel(selectedSortingOption: homeViewModel.sortingOption))
+>>>>>>> 2b70d0b826369b5c56aa7824c502a6f31d3513d5
         popoverController.mealSortingPopoverSelectionDelegate = self
         popoverController.modalPresentationStyle = .popover
         popoverController.preferredContentSize = CGSize(width: 300, height: 88)

@@ -13,10 +13,28 @@ class MealSortingPopoverViewController: UIViewController {
     /// The view that is being represented in this view controller.
     private var mealSortingPopoverView: MealSortingPopoverView!
     /// The view controllers view model.
+<<<<<<< HEAD
     private let viewModel = MealSortingOptionsViewModel()
     /// Delegate that is responsible for sending the sorting option that was selected.
     weak public var mealSortingPopoverSelectionDelegate: MealSortingPopoverSelectionProtocol?
     
+=======
+    private let viewModel: any MealSortingOptionsViewModelProtocol
+    /// Delegate that is responsible for sending the sorting option that was selected.
+    weak public var mealSortingPopoverSelectionDelegate: MealSortingPopoverSelectionProtocol?
+    
+    /// Creates a new instance with the specified view model.
+    /// - Parameter viewModel: Must conform to `MealSortingOptionsViewModelProtocol`.
+    init(viewModel: any MealSortingOptionsViewModelProtocol) {
+        self.viewModel = viewModel
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+>>>>>>> 2b70d0b826369b5c56aa7824c502a6f31d3513d5
     override func loadView() {
         super.loadView()
         mealSortingPopoverView = MealSortingPopoverView()

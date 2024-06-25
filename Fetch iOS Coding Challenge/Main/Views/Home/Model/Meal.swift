@@ -59,6 +59,32 @@ struct Meal: Decodable {
         ingredientsMeasure = try decodeIngredientsMeasure(container: container)
     }
     
+<<<<<<< HEAD
+=======
+    /// Initializes a meal with specified properties.
+    /// - Parameters:
+    ///   - mealId: The unique identifier for the meal.
+    ///   - name: The name of the meal.
+    ///   - thumbnail: The URL string for the thumbnail image of the meal.
+    ///   - area: The area or region where the meal originates from.
+    ///   - category: The category or type of the meal.
+    ///   - instructions: The instructions to prepare the meal.
+    ///   - source: The source of the meal recipe.
+    ///   - youtubeLink: The YouTube link for a video recipe of the meal.
+    ///   - ingredientsMeasure: Dictionary containing ingredients and their respective measures for the meal.
+    init(mealId: String? = nil, name: String? = nil, thumbnail: String? = nil, area: String? = nil, category: String? = nil, instructions: String? = nil, source: String? = nil, youtubeLink: String? = nil, ingredientsMeasure: [String : String]? = nil) {
+        self.mealId = mealId
+        self.name = name
+        self.thumbnail = thumbnail
+        self.area = area
+        self.category = category
+        self.instructions = instructions
+        self.source = source
+        self.youtubeLink = youtubeLink
+        self.ingredientsMeasure = ingredientsMeasure
+    }
+    
+>>>>>>> 2b70d0b826369b5c56aa7824c502a6f31d3513d5
     // MARK: - Private Methods
     /// Decodes ingredients and their respective measures from the decoder container.
     /// - Parameter container: The keyed decoding container.
